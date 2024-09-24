@@ -1,5 +1,5 @@
-const loadPost = async () => {
-    const res = await fetch ('https://openapi.programming-hero.com/api/retro-forum/posts');
+const loadPost = async (searchBoxValue) => {
+    const res = await fetch (`https://openapi.programming-hero.com/api/retro-forum/posts?category=${searchBoxValue}`);
     const data = await res.json();
     const allPost = data.posts;
     // console.log(allPost)
@@ -7,6 +7,7 @@ const loadPost = async () => {
 }
 const displayPost = (allpost) => {
     const postContainer = document.getElementById('post-container')
+    postContainer.textContent = '';
     allpost.forEach(post => {
         const postCard = document.createElement('div');
         postCard.classList = 'bg-[#797dfc27] hover:border border-[#797DFC] flex gap-5 w-[700px] mb-10 r p-10 rounded-3xl'
@@ -86,12 +87,16 @@ const displayPost = (allpost) => {
                         </div>
         `
         postContainer.appendChild(postCard)
-        
     })
 
 }
 
 const handleSearch = () => {
+    const searchBox = document.getElementById('search-box')
+    const searchBoxValue = searchBox.value;
+    loadPost(searchBoxValue)
     
 }
-loadPost()
+loadPost('comedy')
+loadPost('coding')
+loadPost('music')
